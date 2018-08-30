@@ -31,10 +31,25 @@ if (args.rem_res):
 
 
 home="FALSE"
-def fi(user):
-     home=pwd.getpwnam(user).pw_dir
-     print(home)
 
+
+##this  fucntion should return a tuple
+
+def gen_cred():
+	meth=crypt.METHOD_SHA256
+	salty="password1234"
+	htuser=crypt.crypt(salty,meth)
+	htpas=crypt.crypt(salty,meth)
+	return htuser, htpas
+
+## this bit involves checking for the user in passwd file
+
+def check_user(user):
+	home=pwd.getpwnam(user).pw_dir
+	print(home)
+
+
+## this bit is the main bdy so far,  involves sending the name of the user to the check_user function , also the while loop here is to consistently take the user name ^C and ^d are used to exit out cleanly
 
 while True:
              try:
@@ -49,4 +64,11 @@ while True:
                      print("[+]Exiting.")
                      break
  
+
+
+##next bit involves taking the hashed content of the tuple and working on it.
+
+htuser=tup1[0]
+htpass=tup1[1]
+
 
