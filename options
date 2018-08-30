@@ -1,0 +1,52 @@
+#!/usr/bin/python3.7
+
+import argparse
+import pwd
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-u', '--user_check', help='Check if the user exists on the systemand the cpanel', default='hello')
+parser.add_argument('-a', '--add_res', help='Add restriction to htaccess and htpasswd', required=True)
+parser.add_argument('-r', '--rem_res', help='Remove restrictions', action='store_true')
+
+
+
+args = parser.parse_args()
+
+print(args.user_check)
+print(args.add_res)
+#print(args.rem_res)
+
+if (args.add_res):
+	print(f"Lets begin adding restriction for the account {args.add_res}")
+	#Check for availability of the user
+	check_user()
+	#Check for immutability and correct the necessary
+	check_file()
+	
+	add_restrictions()
+	
+
+if (args.rem_res):
+	print(f"Lets remove teh restrictions for the account {args.rem_res}")
+
+
+home="FALSE"
+def fi(user):
+     home=pwd.getpwnam(user).pw_dir
+     print(home)
+
+
+while True:
+             try:
+                     user=input("Enter the name of the user that you want to test availability for :")
+                     fi(user)
+                     if home!= "FALSE":
+                             break
+             except (KeyError):
+                     print("[**]Oops!!... Looks to be that you may have entered a wrong input or perhaps spelled it wrong.")
+             except (KeyboardInterrupt, EOFError):
+                     print("")
+                     print("[+]Exiting.")
+                     break
+ 
+

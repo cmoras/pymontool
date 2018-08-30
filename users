@@ -1,0 +1,15 @@
+#!/usr/local/python3.7
+
+import pwd
+
+while True:
+	try:
+		user=input("Enter the name of the user that you want to test availability for :")
+		home=pwd.getpwnam(user).pw_dir
+		print(home)
+	except (KeyError):
+		print("[**]Oops!!... Looks to be that you may have entered a wrong input or perhaps spelled it wrong.")
+	except (KeyboardInterrupt, EOFError):
+		print("")
+		print("[+]Exiting.")
+		break

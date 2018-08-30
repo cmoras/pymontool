@@ -1,0 +1,26 @@
+#!/usr/local/bin/python3.7
+
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-u', '--user_check', help='Check if the user exists on the systemand the cpanel', default='hello')
+parser.add_argument('-a', '--add_res', help='Add restriction to htaccess and htpasswd', required=True)
+parser.add_argument('-r', '--rem_res', help='Remove restrictions', action='store_true')
+
+
+
+args = parser.parse_args()
+
+print(args.user_check)
+print(args.add_res)
+#print(args.rem_res)
+
+if (args.add_res):
+        print(f"Lets begin adding restriction for the account {args.add_res}")
+
+if (args.rem_res):
+        print(f"Lets remove teh restrictions for the account {args.rem_res}")
+
+
+
+
