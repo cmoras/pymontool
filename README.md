@@ -10,7 +10,7 @@ requirement:
 
 cleanup function.
 generate credentials fucntion.
-check user presece function.
+check user presece function. --done
 check for error function.
 chek fo the ticket formating fucntion
 function to write 
