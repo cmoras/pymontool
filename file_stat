@@ -1,0 +1,46 @@
+#!/usr/local/python3.7
+
+from subprocess import PIPE, Popen
+
+
+##main program bit 
+
+
+def check_immut():
+	p1=PIPE(["lsattr", "test_file"], stdout=PIPE)
+	ou,err=p1.communicate()
+	out=ou.decode('ascii').split( )
+	
+	with open('test_file', 'rt') as file_in:
+		contents=file_in.read()
+	
+##flag_set ==> flag implies that the pre exiting restriction are already presnet. 
+
+	if "Abuse..." in contents:
+		flag_set=True
+	else:
+		flag_set=False
+
+	if ("i" in out) or ("a" in out):
+		if flag_set:
+             		print("prev res")
+			flag_proceed=1
+        	else:
+             		print("no prev res,  but restriction, manual intervention req")
+			flag_proceed=0
+	else:
+     		print("no immutable falgs set..... get fucked")
+		flag_proceed=-1
+
+		
+
+
+
+
+
+
+
+
+
+
+	

@@ -1,0 +1,13 @@
+#!/usr/local/python3.7
+
+out="iasdfg"
+a=False
+
+if ("i" in out) or ("a" in out):
+	if a:
+		print("prev res")
+	else:
+		print("no prev res,  but restriction, manual intervention req")
+else:
+	print("no immutable falgs set..... get fucked")
+
