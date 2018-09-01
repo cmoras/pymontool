@@ -14,11 +14,11 @@ requirement:
 
 -- check user presece function. --done
 
--- check for immutability function. --on it
+-- check for immutability function. --done
 
--- chek fo the ticket formating fucntion
+-- check for the ticket formating fucntion
 
--- function to write 
+-- function to write --on it
 
 -- man page function
 

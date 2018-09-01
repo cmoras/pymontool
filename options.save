@@ -77,10 +77,6 @@ from subprocess import PIPE, Popen
 
 ##main program bit 
 
-flag_a=0
-flag_b=0
-flag_c=0
-flag_d=0
 
 def check_immut():
 	p1=PIPE(["lsattr", "test_file"], stdout=PIPE)
@@ -103,7 +99,7 @@ def check_immut():
 			flag_a=1
         	else:
              		print("immutables set, no abuse set, manual intervention")
-			flag_b=1
+			flag_proceed=0
 	elsif flag_set:
 		if ("i" in out) or ("a" in out):
 			print("previosu restriction")
@@ -117,17 +113,6 @@ def check_immut():
      
 	return flag_a, flag_b, flag_c, flag_d
 
-
-
-file_flag=check_immut()
-
-unset_restrict_proceed=file_flag[0]
-
-immu_set_no_content=file_flag[1]
-
-contetn_set_no_immu=file_flag[2]
-
-set_restrict_proceed=file_flag[3]
 
 
 

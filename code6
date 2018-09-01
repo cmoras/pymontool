@@ -1,0 +1,28 @@
+a=19
+b=True
+flag_a=0
+f_d=0
+flag_c=0
+flag_d=0
+
+if a==10:
+	if b:
+		print("res set")
+		flag_a=1
+	else:
+		print("immut set")
+		f_d=1
+elif b:
+	if a==10:
+		print("res set")
+		flag_a=1
+	else:
+		print("no immut but abuse set")
+		flag_c=1
+
+else:
+	print("No restriction set")
+	flag_d=1
+
+print(f"flag_a={flag_a} flag_b={f_d} flag_c={flag_c} flag_d= {flag_d}")
+	

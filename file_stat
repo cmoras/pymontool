@@ -23,14 +23,24 @@ def check_immut():
 
 	if ("i" in out) or ("a" in out):
 		if flag_set:
-             		print("prev res")
-			flag_proceed=1
+             		print("previosu restriction")
+			flag_a=1
         	else:
-             		print("no prev res,  but restriction, manual intervention req")
+             		print("immutables set, no abuse set, manual intervention")
 			flag_proceed=0
+	elsif flag_set:
+		if ("i" in out) or ("a" in out):
+			print("previosu restriction")
+			flag_a=1
+		else:
+			print("Abuse set, no immutables set, manual intervention")
+			flag_c=1
 	else:
-     		print("no immutable falgs set..... get fucked")
-		flag_proceed=-1
+		print("No restictions")
+		flag_d=1
+     
+	return flag_a, flag_b, flag_c, flag_d
+
 
 		
 
