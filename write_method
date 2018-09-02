@@ -1,0 +1,86 @@
+#!/usr/local/python3.7
+
+
+##get the home directory variable form the check_user method
+
+from shutil import copyfile,copy
+from subprocess import  PIPE,Popen
+
+def_set_restrict(home_dir):
+	print("home_dir")
+	htac=''.join([home_dir, "/.htaccess"])
+	htpas=''.join([home_dir, "/.htpasswd"])
+
+
+#Lets begin first by forming the file sfirst 
+
+	htacbak=''.join([home_dir, "/.htaccess.bk"])
+	htpasbk=''.join([home_dir, "/.htpasswd.bk"])
+
+	p3=Popen(["touch", htacbk], stdout=PIPE)
+	o1,error=p3.communicate()
+
+	p4=Popen(["touch", htpasbk], stdout=PIPE)
+        o2,error=p4.communicate()
+
+# i have completed the backups for the htacces and the htpasswd files and renamed the file with .bk extensions. 
+
+#using this  i should be able to get htpasswd and htaccess details that i will be using in the next section 
+#involving with opeing of ifle and appending the details.
+
+#to begin with lets make a bacup copy of the existing htaccess/htpasswd
+
+
+	copy(htac,  htacbak)
+	copy(htpas, htpasbk)
+
+## here the copy is complete , lets start working on main branch file.
+
+	with open(htac, "a") as fn:
+		fn.write(f"\n" "######### ABUSE RESTRICTIONS ######### TICKET {tid}")
+		fn.write(f"\n" "AuthType Basic")
+		fn.write(f"\n" "AuthName \Restricted\")
+		fn.write(f"\n" "AuthUserFile /home/$user/.htpasswd")
+		fn.write(f"\n" "Require valid-user")
+		fn.write(f"\n" "######### ABUSE RESTRICTIONS ######### TICKET {tid}")
+
+	with open(htpas, "a") as fn:
+		fn.write(f"\n" "{htpu}:{htpws}::ABUSE RESTRICTIONS - TICKET {tid}")
+
+##this should write the details to the file 
+
+#finish with changing the permissions of the files.
+
+	p2=Popen(["chattr", "+ia", "htaccesfile"], stdout=PIPE)
+	ou,err=p2.communicate()
+
+	p6=Popen(["chattr", "+ia", "htpasswd file"], stdout=PIPE)
+        ou,err=p2.communicate()
+
+	print("[+]Restrictions set")
+
+
+
+## for remove estrict check the set_restrcit function for details.
+
+def_remove_restrictions(home_dir):
+	print("home_dir")
+        htac=''.join([home_dir, '/.htaccess'])
+        htpas=''.join([home_dir, '/.htpasswd'])
+
+#lets start with removing the immutable bits set.
+
+
+	p7=Popen(["chattr", "-ia", "htaccesfile"], stdout=PIPE)
+        ou,err=p2.communicate()
+
+        p8=Popen(["chattr", "+ia", "htpasswd file"], stdout=PIPE)
+        ou,err=p2.communicate()
+
+#with this done, lets remove the newly created files and and restore the bk files. 
+
+	copy(htacbak, htac)
+	copy(htpasbk, htpas)
+
+
+
