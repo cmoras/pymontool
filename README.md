@@ -8,8 +8,6 @@ Conversion of acctpasswd:
 
 requirement:
 
--- cleanup function.
-
 -- generate credentials fucntion. --done[retrieved the data]
 
 -- check user presece function. --done
@@ -24,10 +22,6 @@ requirement:
 
 -- remove restriction function --done
 
--- man page extention function
-
-
-
-
+-- manin body remaining
 
 
