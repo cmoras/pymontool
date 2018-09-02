@@ -16,13 +16,13 @@ requirement:
 
 -- check for immutability function. --done
 
--- check for the ticket formating fucntion
+-- check for the ticket formating fucntion --on it
 
--- function to write --on it
+-- function to write --done
 
--- man page function
+-- man page function --done
 
--- remove restriction function
+-- remove restriction function --done
 
 -- man page extention function
 
