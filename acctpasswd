@@ -2,39 +2,13 @@
 
 import argparse
 
-def check_user(user):
-	home=pwd.getpwnam(user).pw_dir
-	print(home)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 parser = argparse.ArgumentParser()
-parser.add_argument('-u', '--user_check', help='Check if the user exists on the systemand the cpanel', default='hello')
+parser.add_argument('-u', '--user_check', help='Check if the user exists on the systemand the cpanel', default='clen.mo')
 parser.add_argument('-a', '--set_res', help='Add restriction to htaccess and htpasswd', action='store_true')
-parser.add_argument('-r', '--unset_res', help='Remove restrictions', action='store_true')
-
+parser.add_argument('-r', '--unset_res', help='Remove restrictions to htaccess and htpasswd', action='store_true')
+parser.add_argument('-t', '--ticket_id', help='Please provide the ticket id generated from Grove', required=True)
 
 args = parser.parse_args()
-
 
 
 ## The section related to testing out if the args are working.
@@ -47,6 +21,7 @@ args = parser.parse_args()
 #	print(f"{args.user_check}")
 #
 ## Testing section completes here 
+
 
 
 
@@ -99,20 +74,21 @@ def check_immut():
 		flag_d=1
      
 	return flag_a, flag_b, flag_c, flag_d
-#####################################################################
-#####################################################################
-###Here we need to pass ticket id to set_restrict function...
-###
+#############################################################
+#############################################################
+###Here we need to pass ticket id to set_restrict function###
+#############################################################
+#############################################################
 
 
-def_set_restrict(home_dir):
+def set_restrict(home_dir):
 	print("home_dir")
 	htac=''.join([home_dir, "/.htaccess"])
 	htpas=''.join([home_dir, "/.htpasswd"])
 
-#Lets begin first by forming the file sfirst 
+	##Lets begin first by forming the file sfirst 
 
-	htacbak=''.join([home_dir, "/.htaccess.bk"])
+	htacbk=''.join([home_dir, "/.htaccess.bk"])
 	htpasbk=''.join([home_dir, "/.htpasswd.bk"])
 
 	p1=Popen(["touch", htacbk], stdout=PIPE)
@@ -121,18 +97,17 @@ def_set_restrict(home_dir):
 	p2=Popen(["touch", htpasbk], stdout=PIPE)
 	o2,error=p2.communicate()
 
-#I have completed the backups for the htacces and the htpasswd files and renamed the file with .bk extensions. 
+	#I have completed the backups for the htacces and the htpasswd files and renamed the file with .bk extensions. 
 
-#using this  i should be able to get htpasswd and htaccess details that i will be using in the next section 
-#involving with opeing of ifle and appending the details.
+	#using this  i should be able to get htpasswd and htaccess details that i will be using in the next section 
+	#involving with opeing of ifle and appending the details.
 
-#to begin with lets make a bacup copy of the existing htaccess/htpasswd
-
+	#to begin with lets make a bacup copy of the existing htaccess/htpasswd
 
 	copy(htac,  htacbak)
 	copy(htpas, htpasbk)
 
-## here the copy is complete , lets start working on main branch file.
+	## here the copy is complete , lets start working on main branch file.
 
 	with open(htac, "a") as fn:
 		fn.write(f"\n" "######### ABUSE RESTRICTIONS ######### TICKET {tid}")
@@ -145,9 +120,9 @@ def_set_restrict(home_dir):
 		with open(htpas, "a") as fn:
 			fn.write(f"\n" "{htpu}:{htpws}::ABUSE RESTRICTIONS - TICKET {tid}")
 
-##this should write the details to the file 
+	##this should write the details to the file 
 
-#finish with changing the permissions of the files.
+	##finish with changing the permissions of the files.
 
 	p3=Popen(["chattr", "+ia", "htaccesfile"], stdout=PIPE)
 	ou,err=p3.communicate()
@@ -156,6 +131,28 @@ def_set_restrict(home_dir):
 	ou,err=p4.communicate()
 
 	print("[+]Restrictions set")
+	
+
+##############################################################################################################
+
+def unset_restrict(home_dir):
+	print("home_dir")
+	print("[+]Reverting the changes made")
+
+	htac=''.join([home_dir, "/.htaccess"])
+        htpas=''.join([home_dir, "/.htpasswd"])
+
+	htacbk=''.join([home_dir, "/.htaccess.bk"])
+        htpasbk=''.join([home_dir, "/.htpasswd.bk"])
+
+	p5=Popen(["mv", htacbk, htac], stdout=PIPE)
+	ou5,err=p5.communicate()
+	
+	p6=Popen(["mv", htpasbk, htpas], stdout=PIPE)
+        ou5,err=p6.communicate()
+
+	
+	print("[+]Restriction removal complete.")
 
 ##############################################################################################################
 #genrate credentials function
@@ -170,7 +167,7 @@ def gen_cred():
 
 if (args.set_res):
         print(f"[+]Setting restrictions for the account :{args.user_check}")
-	print("[?]Checking if the user is present")
+	print("[!!]Checking if the user is present")
 	home="False"
 	while True:
 		try:
@@ -192,7 +189,7 @@ if (args.set_res):
 	htpass=tup1[1]	
 	
 	print("[+]Starting with file status check")
-	check_immut()
+	#check_immut()
 	file_flag=check_immut()
 
 	unset_restrict_proceed=file_flag[0]
@@ -210,7 +207,32 @@ if (args.set_res):
 
 if (args.unset_res):
        	print(f"Lets remove teh restrictions for the account {args.user_check}")
+	print("[!!]Checking if the user is present")
+	home="False"
+        while True:
+                try:
+                        user=input("Enter the name of the user that you want to test availability for :")
+                        check_user(user)
+                        if home!= "FALSE":
+                                break
+                except (KeyError):
+                        print("[**]Oops!!... Looks to be that you may have entered a wrong input or perhaps spelled it wrong.")
+                except (KeyboardInterrupt, EOFError):
+                        print("")
+                        print("[+]Exiting.")
+                        break
 
-
-
-
+        home=check_user()
+	print("[+]Starting with file status check")
+	file_flag=check_immut()
+	
+	unset_restrict_proceed=file_flag[0]
+        immu_set_no_content=file_flag[1]
+        contetn_set_no_immu=file_flag[2]
+        set_restrict_proceed=file_flag[3]
+	
+	print("[+]Removing restrictions")
+	if (unset_restrict_proceed) and not (immu_set_no_content or contetn_set_no_immu):
+		unset_restrict(home_dir)
+	else:
+		print("[!!]This is a severe error. Needs manual intervention")		
